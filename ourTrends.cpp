@@ -3,32 +3,26 @@
 #include <unordered_map>
 #include <string>
 
-//hopefully just created an object of type unordered_map, not sure if it is correct
-typedef std::unordered_map<std::string, std::string> ourMap;
+std::unordered_map<std::string, std::string> ourMap; //created a hash table?
 
 void naiveTrends::increaseCount(std::string s, unsigned int amount){
 	//Check to see if word is already present
-	for (unsigned int i = 0; i < wordCountVector.size(); i++){
-		if (wordCountVector[i].first == s){
-			//If so, just increment the "amount"
-			wordCountVector[i].second += amount;
-			return;
-		}
+	
+	std::unordered_map<std::string, std::string>::iterator found = ourMap.find(s);
+
+	if (found == ourMap.end()) { //element dos not exist in hash table
+		//need to add new element to hash table
+		//check vector first?
 	}
-	//If not, add a new item to the list.
-	wordCountVector.push_back(std::make_pair(s, amount));
+
+	else { //element does exist so update the amount
+		found->second = amount;
+	}
 }
 
 unsigned int naiveTrends::getCount(std::string s){
 	//Check to see if word is present
-	for (unsigned int i = 0; i < wordCountVector.size(); i++){
-		if (wordCountVector[i].first == s){
-			//If so, return the count
-			return wordCountVector[i].second;
-		}
-	}
-	//otherwise, return 0
-	return 0;
+	return ourMap.size();
 }
 
 //Keeping Brinkman's code for this method
@@ -41,6 +35,7 @@ bool compareFunc(std::pair<std::string, unsigned int> i, std::pair<std::string, 
 }
 
 std::string naiveTrends::getNthPopular(unsigned int n){
+	/*Brinkman's Code
 	std::sort(wordCountVector.begin(), wordCountVector.end(), compareFunc);
 	if (n <= numEntries()){
 		return wordCountVector[n].first;
@@ -48,8 +43,10 @@ std::string naiveTrends::getNthPopular(unsigned int n){
 
 	//If they give bad input, return empty string.
 	return "";
+	*/
+	return "";
 }
 
 unsigned int naiveTrends::numEntries(){
-	return wordCountVector.size();
+	return wordCountVector.size(); //Brinkman's Code
 }
