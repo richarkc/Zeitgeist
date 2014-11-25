@@ -12,24 +12,25 @@ bool isSorted;
 void ourTrends::increaseCount(std::string s, unsigned int amount){
 	
 	
-	std::unordered_map<std::string, unsigned int*>::iterator found = ourMap.find(s);
+	std::unordered_map<std::string, unsigned int>::iterator found = ourMap.find(s);
 
 	//element does not exist
 	if (found == ourMap.end()) { 
 		unsigned int j = amount;
-		ourMap.insert(std::make_pair(s,&j));
-		arr.push_back(std::make_pair(&j,s));
+		std::pair<std::string, unsigned int> p = std::make_pair(s, j);
+		ourMap.insert(p);
+		arr.push_back(p);
 	}
 
 	else { //element does exist so update the amount
-		*(found->second) += amount;
+		(found->second) += amount;
 	}
 	isSorted = false;
 }
 
 unsigned int ourTrends::getCount(std::string s){
 	//Check to see if word is present
-	unsigned int* a;
+	unsigned int a;
 	try
 	{
 		a = ourMap.at(s);
@@ -38,23 +39,23 @@ unsigned int ourTrends::getCount(std::string s){
 	{
 		return 0;
 	}
-	return *a;
+	return a;
 	
 }
 
-bool compareFunc(std::pair<unsigned int*, std::string> i, std::pair<unsigned int*, std::string> j) {
-	if (*(i.first) == *(j.first)){
-		return (i.second < j.second);
+bool compareFunc(std::pair<std::string, unsigned int> i, std::pair<std::string, unsigned int> j) {
+	if (i.second == j.second){
+		return (i.first < j.first);
 	}
 
-	return (*(i.first) > *(j.first));
+	return (i.second > j.second);
 }
 
 std::string ourTrends::getNthPopular(unsigned int n){
 	if (isSorted)
 		std::sort(arr.begin(), arr.end(), compareFunc);
 	if (n <= numEntries()){
-		return arr[n].second;
+		return arr[n].first;
 		
 	}
 	//If they give bad input, return empty string.

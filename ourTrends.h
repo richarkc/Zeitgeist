@@ -10,7 +10,7 @@ public:
 	virtual unsigned int numEntries();
 
 protected:
-	std::vector<std::pair<unsigned int*, std::string>> arr;
-	std::unordered_map<std::string, unsigned int*> ourMap; //created a hash table?
+	std::vector<std::pair<std::string, unsigned int>> arr;
+	std::unordered_map<std::string, unsigned int> ourMap; //created a hash table?
 	bool isSorted = false;
 };
