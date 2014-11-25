@@ -9,6 +9,11 @@
 
 bool isSorted;
 
+ourTrends::ourTrends() {
+	ints = new unsigned int[10000];
+	n = 0;
+}
+
 void ourTrends::increaseCount(std::string s, unsigned int amount){
 	
 	
@@ -16,19 +21,16 @@ void ourTrends::increaseCount(std::string s, unsigned int amount){
 
 	//element does not exist
 	if (found == ourMap.end()) { 
-		unsigned int j = amount;
-		std::pair<std::string, unsigned int> p = std::make_pair(s, j);
+		ints[n] = amount;
+		std::pair<std::string, unsigned int> p = std::make_pair(s, n);
 		ourMap.insert(p);
 		arr.push_back(p);
+		n++;
 	}
 
 	else { //element does exist so update the amount
-		(found->second) += amount;
-		for (int i = 0; i < arr.size(); i++){
-			if (arr[i].first == s){
-				arr[i].second += amount;
-			}
-		}
+		ints[found->second] += amount;
+		
 	}
 	isSorted = false;
 }
@@ -43,22 +45,23 @@ unsigned int ourTrends::getCount(std::string s){
 	catch (const std::out_of_range s)
 	{
 		return 0;
+		
 	}
-	return a;
+	return ints[a];
 	
 }
 
-bool compareFunc(std::pair<std::string, unsigned int> i, std::pair<std::string, unsigned int> j) {
-	if (i.second == j.second){
-		return (i.first < j.first);
-	}
 
-	return (i.second > j.second);
-}
+
 
 std::string ourTrends::getNthPopular(unsigned int n){
 	if (!isSorted){
-		std::sort(arr.begin(), arr.end(), compareFunc);
+		std::sort(arr.begin(), arr.end(), [this](const std::pair<std::string, unsigned int> i, std::pair<std::string, unsigned int> j) 
+		{if (ints[i.second] == ints[j.second]){
+			return (i.first < j.first);
+		}
+
+		return (ints[i.second] > ints[j.second]); });
 		isSorted = true;
 	}
 	if (n <= numEntries()){
