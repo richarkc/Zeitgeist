@@ -16,8 +16,9 @@ public:
 protected:
 	
 	unsigned int n;
-	unsigned int* ints;
-	std::vector<std::pair<std::string, unsigned int>> arr;
+	std::vector<int> ints;
+	std::vector<std::pair<std::string, unsigned int>> sortingArr;
 	std::unordered_map<std::string, unsigned int> ourMap; //created a hash table?
-	bool isSorted = false;
+	bool isSorted;
+	
 };

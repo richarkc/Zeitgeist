@@ -4,6 +4,7 @@
 //This function is defined in naiveTrends.cpp
 bool compareFunc(std::pair<std::string, unsigned int> i, std::pair<std::string, unsigned int> j);
 
+
 void smarterTrends::increaseCount(std::string s, unsigned int amount){
 	unsigned int startSize = numEntries();
 	naiveTrends::increaseCount(s, amount);
