@@ -1,40 +1,46 @@
-#include "naiveTrends.h"
+#include "ourTrends.h"
 #include <algorithm>
 #include <unordered_map>
 #include <string>
+#include <map>
 
-std::unordered_map<std::string, std::string> ourMap; //created a hash table?
+std::unordered_map<std::string, unsigned int*> ourMap; //created a hash table?
+std::map<unsigned int, std::string> BST;
 
-void naiveTrends::increaseCount(std::string s, unsigned int amount){
-	//Check to see if word is already present
+void ourTrends::increaseCount(std::string s, unsigned int amount){
 	
-	std::unordered_map<std::string, std::string>::iterator found = ourMap.find(s);
+	
+	std::unordered_map<std::string, unsigned int*>::iterator found = ourMap.find(s);
 
-	if (found == ourMap.end()) { //element dos not exist in hash table
-		//need to add new element to hash table
-		//check vector first?
+	if (found == ourMap.end()) { 
+		unsigned int j = amount;
+		ourMap.insert(std::make_pair(s,&j));
+		BST.insert(std::make_pair(j, s));
 	}
 
 	else { //element does exist so update the amount
-		found->second = amount;
+		
 	}
 }
 
-unsigned int naiveTrends::getCount(std::string s){
+unsigned int ourTrends::getCount(std::string s){
 	//Check to see if word is present
-	return ourMap.size();
-}
-
-//Keeping Brinkman's code for this method
-bool compareFunc(std::pair<std::string, unsigned int> i, std::pair<std::string, unsigned int> j) {
-	if (i.second == j.second){
-		return (i.first < j.first);
+	unsigned int* a;
+	try
+	{
+		a = ourMap.at(s);
 	}
-
-	return (i.second > j.second);
+	catch (const std::out_of_range s)
+	{
+		return 0;
+	}
+	return *a;
+	
 }
 
-std::string naiveTrends::getNthPopular(unsigned int n){
+
+
+std::string ourTrends::getNthPopular(unsigned int n){
 	/*Brinkman's Code
 	std::sort(wordCountVector.begin(), wordCountVector.end(), compareFunc);
 	if (n <= numEntries()){
@@ -47,6 +53,6 @@ std::string naiveTrends::getNthPopular(unsigned int n){
 	return "";
 }
 
-unsigned int naiveTrends::numEntries(){
+unsigned int ourTrends::numEntries(){
 	return wordCountVector.size(); //Brinkman's Code
 }
