@@ -24,6 +24,11 @@ void ourTrends::increaseCount(std::string s, unsigned int amount){
 
 	else { //element does exist so update the amount
 		(found->second) += amount;
+		for (int i = 0; i < arr.size(); i++){
+			if (arr[i].first == s){
+				arr[i].second += amount;
+			}
+		}
 	}
 	isSorted = false;
 }
@@ -52,8 +57,10 @@ bool compareFunc(std::pair<std::string, unsigned int> i, std::pair<std::string, 
 }
 
 std::string ourTrends::getNthPopular(unsigned int n){
-	if (isSorted)
+	if (!isSorted){
 		std::sort(arr.begin(), arr.end(), compareFunc);
+		isSorted = true;
+	}
 	if (n <= numEntries()){
 		return arr[n].first;
 		
