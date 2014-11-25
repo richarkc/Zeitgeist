@@ -1,4 +1,5 @@
 #include "Trends.h"
+#include <unordered_map>
 
 #include <vector>
 
@@ -10,5 +11,6 @@ public:
 	virtual unsigned int numEntries();
 
 protected:
-	std::vector<std::pair<std::string, int> > wordCountVector;
+	std::unordered_map<std::string, unsigned int*> ourMap; //created a hash table?
+	std::vector<std::pair<unsigned int*, std::string>> arr;
 };
